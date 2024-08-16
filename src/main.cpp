@@ -7,7 +7,7 @@ const TGAColor green = TGAColor(0,  255,    0, 255);
 const TGAColor blue = TGAColor(0,  0,    255, 255);
 
 
-void checkTransposition(int &x0, int &x1, int &y0, int &y1, bool &transposed){
+void checkTransposition(int &x0, int &y0, int &x1, int &y1, bool &transposed){
     if(std::abs(x0-x1) < std::abs(y0-y1)){
         std::swap(x0,y0);
         std::swap(x1,y1);
@@ -15,7 +15,7 @@ void checkTransposition(int &x0, int &x1, int &y0, int &y1, bool &transposed){
     }
 }
 
-void checkOrientation(int &x0, int &x1, int &y0, int &y1){
+void checkOrientation(int &x0, int &y0, int &x1, int &y1){
     if(x0 > x1){
         std::swap(x0, x1);
         std::swap(y0, y1);
@@ -24,18 +24,9 @@ void checkOrientation(int &x0, int &x1, int &y0, int &y1){
 
 void drawLine(int x0, int y0, int x1, int y1, TGAImage &image, TGAColor color){
     bool transposed = false;
-    //checkTransposition(x0,x1,y0,y1, transposed);
-    //checkOrientation(x0,y0, x1, y1);
-    if(std::abs(x0-x1) < std::abs(y0-y1)){
-        std::swap(x0,y0);
-        std::swap(x1,y1);
-        transposed = true;
-    }
-
-    if(x0 > x1){
-        std::swap(x0, x1);
-        std::swap(y0, y1);
-    }
+    
+    checkTransposition(x0,y0,x1,y1, transposed);
+    checkOrientation(x0,y0, x1, y1);
 
     int dx = x1 - x0;
     int dy = y1 - y0;
